@@ -4,7 +4,7 @@
 
 0.  Acquire an API key from https://currencylayer.com/
 
-1.  Create `Secrets.swift` in directory `CurrencyConverter/AppResources``
+1.  Create `Secrets.swift` in directory `CurrencyConverter/AppResources`
 
 
 
