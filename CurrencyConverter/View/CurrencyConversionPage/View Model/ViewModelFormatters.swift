@@ -26,18 +26,14 @@ struct CurrencyConversionViewFormatters {
             let components = newValue.components(separatedBy: ".")
             if components.count == 2 {
                 
-                var returnValue = ""
-                if components[0].count <= maxIntegersDigits {
-                    returnValue = newValue
-                } else {
-                    returnValue = prevValue
+                if components[0].count > maxIntegersDigits {
+                    return prevValue
                 }
-                if components[1].count <= maxFractionsDigits {
-                    returnValue = newValue
-                } else {
-                    returnValue = prevValue
+                
+                if components[1].count > maxFractionsDigits {
+                    return prevValue
                 }
-                return returnValue
+                return newValue
             } else {
                 if components[0].count <= maxIntegersDigits {
                     return newValue

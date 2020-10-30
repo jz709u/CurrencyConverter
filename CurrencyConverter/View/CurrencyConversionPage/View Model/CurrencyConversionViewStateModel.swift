@@ -21,10 +21,11 @@ internal class CurrencyConversionViewStateModel {
     
     var fromCurrency: Currency = AppManager.config.currencyFactory.createEmptyCurrency() {
         didSet {
+            onFromCurrencyChanged?()
             guard isValidAmount() != nil else { return }
             fetchActiveExchangeRates { }
-            onFromCurrencyChanged?()
             objectChanged()
+            
         }
     }
     
