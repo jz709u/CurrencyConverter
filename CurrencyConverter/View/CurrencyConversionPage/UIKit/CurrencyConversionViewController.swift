@@ -1,38 +1,16 @@
 import Foundation
 import UIKit
 
-
-class BaseCVCell: UICollectionViewCell {
-    static var reuseId: String { "\(self)"}
-}
-
-class EmptyCell: BaseCVCell { }
-
-class FormCell: BaseCVCell {
-    
-    static var nib: UINib {
-        UINib(nibName: "FormCell", bundle: nil)
-    }
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-}
-
-class CurrencyExchangeCell: BaseCVCell {
-    
-}
-
-class CurrencyConversionViewModel {
-    var currencyExchangeRates = [CurrencyExchangeRate]()
-}
-
 class CurrencyConversionViewController: UIViewController {
     
-    let viewModel = CurrencyConversionViewModel()
+    lazy var viewModel: CurrencyConversionViewStateModel = {
+       let _vm = CurrencyConversionViewStateModel()
+        
+        return _vm
+    }()
     
     enum Sections: Int, CaseIterable {
         case Form, List
-        
         static var count: Int {
             allCases.count
         }
@@ -69,7 +47,7 @@ extension CurrencyConversionViewController: UICollectionViewDataSource, UICollec
         case .Form:
             return 1
         case .List:
-            return viewModel.currencyExchangeRates.count
+            return viewModel.availableExchangeRates.count
         }
     }
     

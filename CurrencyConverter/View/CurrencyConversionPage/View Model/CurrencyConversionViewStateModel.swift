@@ -1,36 +1,46 @@
-
+import Foundation
 import SwiftUI
 
-@available(iOS 13, *)
-internal class CurrencyConversionSViewStateModel: ObservableObject {
+internal class CurrencyConversionViewStateModel {
     
-    private let api: CurrencyConversionAPI
+    // MARK: - Observered Properties
     
-    init(api: CurrencyConversionAPI = CurrencyLayerAPI()) {
-        self.api = api
-    }
-    
-    @Published var availableCurrencies = [Currency]() {
+    var availableCurrencies = [Currency]() {
         didSet{
             guard let firstCurrency = availableCurrencies.first else { return }
             fromCurrency = firstCurrency
             for currency in availableCurrencies {
                 abbreviationToLocalizedName[currency.abbreviation] = currency.localizedName
             }
+            onAvailableCurrenciesChanged?()
+            objectChanged()
         }
     }
+    
     var abbreviationToLocalizedName = [String: String]()
     
-    @Published var fromCurrency: Currency = AppManager.config.currencyFactory.createEmptyCurrency() {
+    var fromCurrency: Currency = AppManager.config.currencyFactory.createEmptyCurrency() {
         didSet {
             guard isValidAmount() != nil else { return }
             fetchActiveExchangeRates { }
+            onFromCurrencyChanged?()
+            objectChanged()
         }
     }
     
-    @Published var amount = ""
-    @Published var availableExchangeRates = [CurrencyExchangeRate]()
+    var amount = "" {
+        didSet {
+            onAmountChanged?()
+            objectChanged()
+        }
+    }
     
+    var availableExchangeRates = [CurrencyExchangeRate]() {
+        didSet {
+            onAvailableExchangeRatesChanged?()
+            objectChanged()
+        }
+    }
     
     var availableCurrenciesCancelable: Cancelable? {
         willSet { availableCurrenciesCancelable?.cancel() }
@@ -38,6 +48,26 @@ internal class CurrencyConversionSViewStateModel: ObservableObject {
     var activeRatesCancelable: Cancelable? {
         willSet{ activeRatesCancelable?.cancel() }
     }
+    
+    // MARK: - On Change closures
+    
+    public var onAvailableCurrenciesChanged: (() -> Void)?
+    public var onFromCurrencyChanged: (() -> Void)?
+    public var onAmountChanged: (() -> Void)?
+    public var onAvailableExchangeRatesChanged: (() -> Void)?
+    public var onObjectChanged: (() -> Void)?
+    
+    // MARK: - API
+    
+    private let api: CurrencyConversionAPI
+    
+    // MARK: - Life Cycle
+    
+    init(api: CurrencyConversionAPI = CurrencyLayerAPI()) {
+        self.api = api
+    }
+    
+    // MARK: - Fetch Methods
     
     func fetchAvailableCurrencies(completion: @escaping () -> Void) {
         availableCurrenciesCancelable = api.getCurrencies { [weak self] (currencies) in
@@ -59,6 +89,8 @@ internal class CurrencyConversionSViewStateModel: ObservableObject {
                                                   })
     }
     
+    // MARK: - validators
+    
     func isValidAmount() -> Double? {
         guard let decimalValue = Double(amount),
               decimalValue > 0 else {
@@ -66,4 +98,15 @@ internal class CurrencyConversionSViewStateModel: ObservableObject {
         }
         return decimalValue
     }
+    
+    /// SwiftUI update support
+    func objectChanged() {
+        onObjectChanged?()
+        if #available(iOS 14.0,*) {
+            objectWillChange.send()
+        }
+    }
 }
+
+@available(iOS 14, *)
+extension CurrencyConversionViewStateModel: ObservableObject { }

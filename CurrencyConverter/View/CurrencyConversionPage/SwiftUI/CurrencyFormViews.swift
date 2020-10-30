@@ -71,9 +71,6 @@ struct InitializingSView<T:View>: View {
 @available(iOS 13, *)
 struct FormTextFieldSView: View {
     
-    let maxIntegersDigits = 25
-    let maxFractionsDigits = 6
-    
     // MARK: - Variables
     
     @Binding var enteredText: String
@@ -82,40 +79,14 @@ struct FormTextFieldSView: View {
     
     // MARK: - Methods
     
-    private func formatText(prevValue: String, newValue: String) {
-        if prevValue.last != "." && newValue.last == "." {
-            self.enteredText = newValue
-            return
-        }
-        
-        let components = newValue.components(separatedBy: ".")
-        if components.count == 2 {
-            if components[0].count < maxIntegersDigits {
-                self.enteredText = newValue
-            } else {
-                self.enteredText = prevValue
-            }
-            if components[1].count < maxFractionsDigits {
-                self.enteredText = newValue
-            } else {
-                self.enteredText = prevValue
-            }
-        } else {
-            if components[0].count < maxIntegersDigits {
-                self.enteredText = newValue
-            } else {
-                self.enteredText = prevValue
-            }
-        }
-    }
     
     // MARK: - View
     
     var body: some View {
         let formatterText = Binding<String>(
             get: { self.enteredText },
-            set: { self.formatText(prevValue: self.enteredText,
-                                   newValue: $0)
+            set: { self.enteredText = CurrencyConversionViewFormatters.DigitFormatter.formatText(prevValue: self.enteredText,
+                                                                                                 newValue: $0)
             })
         
         HStack(alignment: .firstTextBaseline, spacing: 10, content: {

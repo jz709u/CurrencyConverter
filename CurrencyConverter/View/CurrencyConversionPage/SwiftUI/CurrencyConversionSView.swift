@@ -6,9 +6,9 @@ struct CurrencyConversionSView: View {
     
     @State private var initialized = false
     
-    @ObservedObject private var viewModel: CurrencyConversionSViewStateModel
+    @ObservedObject private var viewModel: CurrencyConversionViewStateModel
     
-    init(viewModel: CurrencyConversionSViewStateModel = CurrencyConversionSViewStateModel()) {
+    init(viewModel: CurrencyConversionViewStateModel = CurrencyConversionViewStateModel()) {
         self.viewModel = viewModel
     }
     
@@ -37,33 +37,45 @@ struct CurrencyConversionSView: View {
 
 @available(iOS 14, *)
 struct ConvertFromSectionSUIView: View {
-    @ObservedObject var viewModel: CurrencyConversionSViewStateModel
+    @ObservedObject var viewModel: CurrencyConversionViewStateModel
     
     var body: some View {
         Section(header: Text("Convert From")) {
+            
+            // picker cell
             CurrencyPickerSView(selectedCurrency: $viewModel.fromCurrency,
                                 availableCurrencies: viewModel.availableCurrencies)
             
+            // available currencies and from currency is set
             if !viewModel.availableCurrencies.isEmpty &&
                 !viewModel.fromCurrency.isEmpty {
-                FormTextFieldSView(enteredText: $viewModel.amount, label: "Amount", onCommit: {
+                
+                // amount text field
+                FormTextFieldSView(enteredText: $viewModel.amount,
+                                   label: "Amount",
+                                   onCommit: {
                     viewModel.fetchActiveExchangeRates { }
                 })
                 
+                // if amount is valid then show convert button
                 if viewModel.isValidAmount() != nil {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            UIApplication.shared.endEditing()
-                            viewModel.fetchActiveExchangeRates { }
-                            
-                        }, label: {
-                            Text("Convert!")
-                        })
-                    }.padding(.vertical, 5)
+                    self.convertButtonCell()
                 }
             }
         }
+    }
+    
+    func convertButtonCell() -> some View {
+        HStack {
+            Spacer()
+            Button(action: {
+                UIApplication.shared.endEditing()
+                viewModel.fetchActiveExchangeRates { }
+                
+            }, label: {
+                Text("Convert!")
+            })
+        }.padding(.vertical, 5)
     }
 }
 
@@ -71,65 +83,76 @@ struct ConvertFromSectionSUIView: View {
 @available(iOS 14, *)
 struct AvailableRatesSectionSUIView: View {
     
-    static let gridSpacing: CGFloat = 10
-    static let cornerRadius: CGFloat = 10
+    private static let gridSpacing: CGFloat = 10
+    private static let cellSize: CGFloat = 150
     
-    var columns: [GridItem] = {
-        return [GridItem(.adaptive(minimum: 100), spacing: Self.gridSpacing),
-                GridItem(.adaptive(minimum: 100), spacing: Self.gridSpacing)]
+    private let columns: [GridItem] = {
+        [GridItem(.adaptive(minimum: Self.cellSize),
+                  spacing: Self.gridSpacing),
+         GridItem(.adaptive(minimum: Self.cellSize),
+                  spacing: Self.gridSpacing)]
         
     }()
     
-    static var numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
-        formatter.numberStyle = .currencyAccounting
-        return formatter
-    }()
-    
-    static func numberFormatter(with localId:String) -> NumberFormatter {
-        numberFormatter.currencyCode = localId
-        return numberFormatter
-    }
-    
-    @ObservedObject var viewModel: CurrencyConversionSViewStateModel
+    @ObservedObject var viewModel: CurrencyConversionViewStateModel
     
     var body: some View {
         if viewModel.availableExchangeRates.count > 0 &&
             viewModel.isValidAmount() != nil {
             
             Section(header: Text("Current Rates")) {
-                LazyVGrid(columns: columns, alignment: .center, spacing: Self.gridSpacing) {
+                LazyVGrid(columns: columns,
+                          alignment: .center,
+                          spacing: Self.gridSpacing) {
+                    
                     ForEach(0..<viewModel.availableExchangeRates.count) { (index) in
-                        VStack {
-                            let _exchangeRate = viewModel.availableExchangeRates[index]
-                            
-                            if let name = viewModel.abbreviationToLocalizedName[_exchangeRate.toCurrencyAbbrev] {
-                                Text(name)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .padding(.vertical)
-                                    .multilineTextAlignment(.center)
-                            } else {
-                                Text(_exchangeRate.toCurrencyAbbrev)
-                                    .padding(.vertical)
-                                    .multilineTextAlignment(.center)
-                            }
-                            
-                            Text("\(NSNumber(value: _exchangeRate.rate), formatter: Self.numberFormatter(with: _exchangeRate.toCurrencyAbbrev) )")
-                                .fixedSize(horizontal: false, vertical: true)
-                                .padding()
-                                .multilineTextAlignment(.center)
-                        }
-                        .padding(.vertical)
-                        .frame(width: 150, height: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(Self.cornerRadius)
+                        
+                        let rate = viewModel.availableExchangeRates[index]
+                        
+                        CurrencyConversionSViewGridCell(gridSize: Self.cellSize,
+                                                        viewModel: rate,
+                                                        localizedName: viewModel.abbreviationToLocalizedName[rate.toCurrencyAbbrev])
                     }
-                }.padding(.vertical, 10)
+                }.padding(.vertical, Self.gridSpacing)
             }
+            
         } else {
             EmptyView()
         }
+    }
+}
+
+@available(iOS 14, *)
+struct CurrencyConversionSViewGridCell: View {
+    
+    static let cornerRadius: CGFloat = 10
+    
+    let gridSize: CGFloat
+    let viewModel: CurrencyExchangeRate
+    var localizedName: String?
+    
+    var body: some View {
+        VStack {
+            let displayName = localizedName ?? viewModel.toCurrencyAbbrev
+            
+            Text(displayName)
+                .fixedSize(horizontal: false,
+                           vertical: true)
+                .padding()
+                .multilineTextAlignment(.center)
+            
+            Text("\(NSNumber(value: viewModel.rate),formatter: CurrencyConversionViewFormatters.currencyNumberFormatter(with: viewModel.toCurrencyAbbrev) )")
+                .fixedSize(horizontal: false,
+                           vertical: true)
+                .padding()
+                .multilineTextAlignment(.center)
+        }
+        .padding(.vertical)
+        .frame(width: gridSize,
+               height: gridSize,
+               alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(Self.cornerRadius)
     }
 }
 
@@ -177,7 +200,7 @@ struct SUI_CurrencyConversionView_Previews: PreviewProvider {
         }
     }
     
-    static var testViewModel = CurrencyConversionSViewStateModel(api: MockCurrencyAPI())
+    static var testViewModel = CurrencyConversionViewStateModel(api: MockCurrencyAPI())
     static var previews: some View {
         NavigationView {
             CurrencyConversionSView(viewModel: testViewModel)
