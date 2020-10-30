@@ -2,8 +2,6 @@
 
 Currency App to see the latest Conversion rates between your favorite currency and the world's currencies!
 
-> iOS 14 and greater is only supported for now.  
-
 ## Functional Goals
 
  1. Exchange rates API: https://currencylayer.com/documentation
@@ -57,6 +55,5 @@ enum Secrets {
 ## TODO
 
 1. Complete Unit Test and Integration Test Suite **partially done**
-2. Support from iOS 12
-3. UIKit view **partially done**
-4. Core Data support
+2. Core Data support
+3. Centralized Color branding scheme
