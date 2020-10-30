@@ -28,11 +28,10 @@ class RealmDatabase: NSObject, Database {
     
     func getCurrencies() -> [Currency] {
         do {
-            let now = Date()
             let realm = try Realm()
             let rCurrencies = realm.objects(RealmCurrency.self)
             
-            guard rCurrencies.first(where: { now.distance(to:$0.created) > expireTime }) == nil else { return [] }
+            guard rCurrencies.first(where: { $0.created.timeIntervalSinceNow > expireTime }) == nil else { return [] }
             
             return Array(rCurrencies
                             .map { $0.currency }
@@ -68,7 +67,7 @@ class RealmDatabase: NSObject, Database {
             let realmCurrencyExchangeRates = realm.objects(RealmCurrencyExchangeRateList.self)
                 .filter("fromCurrencyAbbrev = '\(currency.abbreviation)'")
             
-            guard realmCurrencyExchangeRates.first(where: { now.distance(to:$0.created) > expireTime }) == nil else { return nil }
+            guard realmCurrencyExchangeRates.first(where: { $0.created.timeIntervalSinceNow > expireTime }) == nil else { return nil }
             
             return realmCurrencyExchangeRates.map({ $0.currencyExchangeRates }).first
             

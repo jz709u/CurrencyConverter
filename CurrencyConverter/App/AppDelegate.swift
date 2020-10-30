@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Private Methods
     
     func _presentRootViewControllerIfNotiOS13() {
-        if #available(iOS 13, *) { return }
+        if #available(iOS 14, *) { return }
         window = UIWindow()
         window?.rootViewController = UINavigationController(rootViewController: CurrencyConversionViewController())
         window?.makeKeyAndVisible()

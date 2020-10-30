@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?

@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct CurrencyConversionSView: View {
     
     @State private var initialized = false
@@ -35,7 +35,7 @@ struct CurrencyConversionSView: View {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct ConvertFromSectionSUIView: View {
     @ObservedObject var viewModel: CurrencyConversionSViewStateModel
     
@@ -68,7 +68,7 @@ struct ConvertFromSectionSUIView: View {
 }
 
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct AvailableRatesSectionSUIView: View {
     
     static let gridSpacing: CGFloat = 10
@@ -134,7 +134,7 @@ struct AvailableRatesSectionSUIView: View {
 }
 
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct SUI_CurrencyConversionView_Previews: PreviewProvider {
     struct MockCurrency: Currency {
         var abbreviation: String
