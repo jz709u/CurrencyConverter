@@ -2,6 +2,8 @@
 
 Currency App to see the latest Conversion rates between your favorite currency and the world's currencies!
 
+> iOS 14 and greater is only supported for now.  
+
 ## Functional Goals
 
  1. Exchange rates API: https://currencylayer.com/documentation
