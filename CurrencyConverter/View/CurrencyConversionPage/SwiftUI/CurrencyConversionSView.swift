@@ -125,7 +125,7 @@ struct AvailableRatesSectionSUIView: View {
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(Self.cornerRadius)
                     }
-                }
+                }.padding(.vertical, 10)
             }
         } else {
             EmptyView()
