@@ -70,7 +70,12 @@ class FormCell: BaseCVCell, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        onConvert?()
+        
+        guard let newValue = amountTextField.text,
+              let onAmountChanged = onAmountChangedIsValid else { return false }
+        if onAmountChanged(newValue) {
+            onConvert?()
+        }
         return true
     }
 }
