@@ -79,7 +79,7 @@
                     <constraint firstItem="Di9-y7-qf2" firstAttribute="leading" secondItem="ieS-gt-MDn" secondAttribute="leadingMargin" id="Php-b3-gOf"/>
                     <constraint firstItem="Di9-y7-qf2" firstAttribute="top" secondItem="ieS-gt-MDn" secondAttribute="topMargin" id="jhB-Pa-q0h"/>
                 </constraints>
-                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                <edgeInsets key="layoutMargins" top="8" left="15" bottom="8" right="15"/>
             </collectionViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>

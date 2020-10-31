@@ -115,6 +115,20 @@ class SectionHeader: UICollectionReusableView {
         return label
     }()
     
+    lazy var topBorderView: UIView = {
+        let borderView = UIView(frame: .zero)
+        borderView.backgroundColor = .lightGray
+        borderView.translatesAutoresizingMaskIntoConstraints = false
+        return borderView
+    }()
+    
+    lazy var bottomBorderView: UIView = {
+        let borderView = UIView(frame: .zero)
+        borderView.backgroundColor = .lightGray
+        borderView.translatesAutoresizingMaskIntoConstraints = false
+        return borderView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -126,6 +140,7 @@ class SectionHeader: UICollectionReusableView {
     }
     
     private func commonInit() {
+        directionalLayoutMargins.leading = 15
         backgroundColor = UIColor.gray.withAlphaComponent(0.2)
         addSubview(titleLabel)
         NSLayoutConstraint.activate([
@@ -136,6 +151,29 @@ class SectionHeader: UICollectionReusableView {
             layoutMarginsGuide.topAnchor.constraint(equalTo: titleLabel.topAnchor,
                                                     constant: 0),
             layoutMarginsGuide.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor,
+                                                       constant: 0)
+        ])
+        
+        
+        addSubview(topBorderView)
+        NSLayoutConstraint.activate([
+            leftAnchor.constraint(equalTo: topBorderView.leftAnchor,
+                                                     constant: 0),
+            rightAnchor.constraint(equalTo: topBorderView.rightAnchor,
+                                                      constant: 0),
+            topBorderView.heightAnchor.constraint(equalToConstant: 0.5),
+            topAnchor.constraint(equalTo: topBorderView.topAnchor,
+                                                       constant: 0)
+        ])
+        
+        addSubview(bottomBorderView)
+        NSLayoutConstraint.activate([
+            leftAnchor.constraint(equalTo: bottomBorderView.leftAnchor,
+                                                     constant: 0),
+            rightAnchor.constraint(equalTo: bottomBorderView.rightAnchor,
+                                                      constant: 0),
+            bottomBorderView.heightAnchor.constraint(equalToConstant: 0.5),
+            bottomAnchor.constraint(equalTo: bottomBorderView.bottomAnchor,
                                                        constant: 0)
         ])
     }
