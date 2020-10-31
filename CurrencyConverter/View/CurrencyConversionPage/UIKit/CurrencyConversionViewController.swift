@@ -149,7 +149,7 @@ extension CurrencyConversionViewController: UICollectionViewDataSource, UICollec
         case .Form:
             return UIEdgeInsets.zero
         case .List:
-            return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         }
     }
     

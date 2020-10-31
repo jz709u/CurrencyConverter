@@ -68,6 +68,11 @@ class FormCell: BaseCVCell, UITextFieldDelegate {
         
         return validText == updatedText
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        onConvert?()
+        return true
+    }
 }
 
 class CurrencyExchangeCell: BaseCVCell {

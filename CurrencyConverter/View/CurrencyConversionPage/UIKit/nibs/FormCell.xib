@@ -21,19 +21,19 @@
                         <rect key="frame" x="16" y="8" width="305" height="134"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Tem-Uq-n7o">
-                                <rect key="frame" x="0.0" y="0.0" width="305" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="305" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Currency:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35V-iI-pXa">
-                                        <rect key="frame" x="0.0" y="0.0" width="152.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="152.5" height="45"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="L67-qw-mng"/>
+                                            <constraint firstAttribute="height" constant="45" id="L67-qw-mng"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCn-jt-I7e">
-                                        <rect key="frame" x="152.5" y="0.0" width="152.5" height="50"/>
+                                        <rect key="frame" x="152.5" y="0.0" width="152.5" height="45"/>
                                         <state key="normal" title="Select Currency"/>
                                         <connections>
                                             <action selector="pressedWithSelectCurrencyButton:" destination="Ba1-Zw-iDJ" eventType="touchUpInside" id="yia-B6-wzx"/>
@@ -42,7 +42,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="IBC-Po-og0">
-                                <rect key="frame" x="0.0" y="50" width="305" height="40"/>
+                                <rect key="frame" x="0.0" y="45" width="305" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7EK-1P-9dZ">
                                         <rect key="frame" x="0.0" y="0.0" width="152.5" height="40"/>
@@ -64,7 +64,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4eJ-d9-7DU">
-                                <rect key="frame" x="0.0" y="90" width="305" height="44"/>
+                                <rect key="frame" x="0.0" y="85" width="305" height="49"/>
                                 <state key="normal" title="Convert!"/>
                                 <connections>
                                     <action selector="pressedWithConvertButton:" destination="Ba1-Zw-iDJ" eventType="touchUpInside" id="VYI-o3-BRK"/>
