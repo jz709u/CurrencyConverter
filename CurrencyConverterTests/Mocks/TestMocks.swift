@@ -6,7 +6,7 @@ struct MockCurrency: Currency {
     var localizedName: String
 }
 
-struct MockExchangeRates: CurrencyExchangeRates {
+struct MockExchangeRatesList: CurrencyExchangeRates {
     var fromCurrencyAbbrev: String
     var exchangeRates: [CurrencyExchangeRate]
 }

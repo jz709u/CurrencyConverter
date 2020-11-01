@@ -121,7 +121,7 @@ class CurrencyLayerAPI_IntegrationTests: BaseCurrencyConverterTests {
 
         let database = RealmDatabase(expireTime: 10)
 
-        let fakeExchangeRates = MockExchangeRates(fromCurrencyAbbrev: "USD",
+        let fakeExchangeRates = MockExchangeRatesList(fromCurrencyAbbrev: "USD",
                                                   exchangeRates: [MockExchangeRate(fromCurrencyAbbrev: "USD",
                                                                                    toCurrencyAbbrev: "MOM",
                                                                                    rate: 0.1)])
@@ -141,7 +141,7 @@ class CurrencyLayerAPI_IntegrationTests: BaseCurrencyConverterTests {
 
         let database = RealmDatabase(expireTime: 3)
 
-        let fakeExchangeRates = MockExchangeRates(fromCurrencyAbbrev: "USD",
+        let fakeExchangeRates = MockExchangeRatesList(fromCurrencyAbbrev: "USD",
                                                   exchangeRates: [MockExchangeRate(fromCurrencyAbbrev: "USD",
                                                                                    toCurrencyAbbrev: "MOM",
                                                                                    rate: 0.1)])

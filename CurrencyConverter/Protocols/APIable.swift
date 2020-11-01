@@ -26,6 +26,10 @@ extension APIable where Self: RawRepresentable,
             components.queryItems?.append(URLQueryItem(name: k, value: v))
         }
         
+        if components.queryItems?.count == 0 {
+            components.queryItems = nil
+        }
+        
         return components.url
     }
     
@@ -41,6 +45,10 @@ extension APIable where Self: RawRepresentable,
         
         if let queryItemForAccessToken = queryItemForAccessToken {
             components.queryItems?.append(queryItemForAccessToken)
+        }
+        
+        if components.queryItems?.count == 0 {
+            components.queryItems = nil
         }
         
         return components.url

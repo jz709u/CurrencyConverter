@@ -102,7 +102,7 @@ class RealmDatabase_UnitTests: BaseCurrencyConverterTests {
     // MARK: - Get Exchange Rates
     
     let testSubRates = [MockExchangeRate(fromCurrencyAbbrev: "hello_sub", toCurrencyAbbrev: "world_sub", rate: 10)]
-    var testRates: MockExchangeRates { MockExchangeRates(fromCurrencyAbbrev: "hello", exchangeRates: testSubRates) }
+    var testRates: MockExchangeRatesList { MockExchangeRatesList(fromCurrencyAbbrev: "hello", exchangeRates: testSubRates) }
     
     func test_shouldGetExchangeRates() throws {
         

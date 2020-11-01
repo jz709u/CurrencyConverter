@@ -36,10 +36,4 @@ struct DefaultCurrencyFactory: CurrencyFactory {
                                       fromCurAbbrev: fromCurAbbr,
                                       toCurrencyAbbrev: toCurAbbr)
     }
-    
-    func createExchangeRateForUSD() -> CurrencyExchangeRate {
-        ViewModelCurrencyExchangeRate(rate: 1.0,
-                                      fromCurAbbrev: AppConstants.ISO4217_USD,
-                                      toCurrencyAbbrev: AppConstants.ISO4217_USD)
-    }
 }
