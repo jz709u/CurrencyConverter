@@ -3,6 +3,8 @@ import UIKit
 
 class SelectFromCurrencyVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    // MARK: - Private Variables
+    
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: self.view.bounds)
         tv.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -14,6 +16,8 @@ class SelectFromCurrencyVC: UIViewController, UITableViewDataSource, UITableView
     
     private let currencies: [Currency]
     private let onSelect: (Currency) -> Void
+    
+    // MARK: - Life Cycle
     
     init(currencies: [Currency],
          onSelect: @escaping (Currency) -> Void) {
@@ -29,6 +33,8 @@ class SelectFromCurrencyVC: UIViewController, UITableViewDataSource, UITableView
         tableView.fill(view: self.view)
         tableView.reloadData()
     }
+    
+    // MARK: - UITableviewDataSource UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         currencies.count
@@ -47,7 +53,6 @@ class SelectFromCurrencyVC: UIViewController, UITableViewDataSource, UITableView
             navigationController.popViewController(animated: true)
         } else {
             dismiss(animated: true, completion: nil)
-        }
-        
+        }        
     }
 }

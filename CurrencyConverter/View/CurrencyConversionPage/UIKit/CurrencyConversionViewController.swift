@@ -3,6 +3,8 @@ import UIKit
 
 class CurrencyConversionViewController: UIViewController {
     
+    // MARK: - Variables
+    
     private lazy var reloadDataClosure: () -> Void = { [weak self] () in
         self?.collectionView.reloadData()
     }
@@ -44,6 +46,8 @@ class CurrencyConversionViewController: UIViewController {
         }
     }
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -59,6 +63,8 @@ class CurrencyConversionViewController: UIViewController {
         
         viewModel.fetchAvailableCurrencies { }
     }
+    
+    // MARK: - Action
     
     @objc private func pressed(clearCacheButton: UIButton) {
         AppManager.config.database.clear()

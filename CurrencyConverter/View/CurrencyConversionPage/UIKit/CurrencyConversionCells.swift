@@ -5,6 +5,9 @@ class BaseCVCell: UICollectionViewCell {
     static var reuseId: String { "\(self)"}
     static var nib: UINib { UINib(nibName: "\(self)",
                                   bundle: nil) }
+    
+    // MARK: - Life Cycle
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -15,9 +18,7 @@ class BaseCVCell: UICollectionViewCell {
         commonInit()
     }
     
-    func commonInit() {
-        
-    }
+    func commonInit() { }
 }
 
 class EmptyCell: BaseCVCell { }
@@ -27,14 +28,19 @@ class FormCell: BaseCVCell, UITextFieldDelegate {
     static let cellHeight: CGFloat = 150
     
     // MARK: - IBOutlets
+    
     @IBOutlet weak var selectCurrencyButton: UIButton!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var convertButton: UIButton!
+    
+    // MARK: - Variables
     
     var onPressCurrencyButton: ((UIButton) -> Void)?
     var onAmountChangedIsValid: ((String) -> Bool)?
     var onConvert: (() -> Void)?
     var previousValue = ""
+    
+    // MARK: - IBAction
     
     @IBAction func pressed(selectCurrencyButton: UIButton) {
         onPressCurrencyButton?(selectCurrencyButton)
@@ -50,6 +56,8 @@ class FormCell: BaseCVCell, UITextFieldDelegate {
         onConvert?()
     }
     
+    // MARK: - Life Cycle
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         amountTextField.textAlignment = .right
@@ -59,6 +67,8 @@ class FormCell: BaseCVCell, UITextFieldDelegate {
         selectCurrencyButton.titleLabel?.numberOfLines = 2
         convertButton.isEnabled = false
     }
+    
+    // MARK: - UITextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let previousText = textField.text as NSString? else { return true }
@@ -82,6 +92,8 @@ class FormCell: BaseCVCell, UITextFieldDelegate {
 
 class CurrencyExchangeCell: BaseCVCell {
     
+    // MARK: - Variables
+    
     lazy var stackView: UIStackView = {
         let sv = UIStackView(frame: self.contentView.bounds)
         sv.axis = .vertical
@@ -102,6 +114,8 @@ class CurrencyExchangeCell: BaseCVCell {
         return label
     }()
     
+    // MARK: - Life Cycle
+    
     override func commonInit() {
         contentView.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
         contentView.layer.cornerRadius = 10
@@ -113,9 +127,13 @@ class CurrencyExchangeCell: BaseCVCell {
 }
 
 class SectionHeader: UICollectionReusableView {
+    
+    // MARK: - Static Variables
 
     static var reuseId: String { "\(self)"}
     static let height: CGFloat = 50
+    
+    // MARK: - Variables
     
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -138,6 +156,8 @@ class SectionHeader: UICollectionReusableView {
         borderView.translatesAutoresizingMaskIntoConstraints = false
         return borderView
     }()
+    
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
