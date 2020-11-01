@@ -28,4 +28,4 @@ jobs:
           bundle exec pod install
 
       - name: Run Tests
-        run: xcodebuild test -workspace CurrencyConverter.xcworkspace -scheme CurrencyConverterTests -destination 'platform=iOS,name=iPhone'
+        run: xcodebuild test -workspace CurrencyConverter.xcworkspace -scheme CurrencyConverterTests -destination 'platform=iOS Simulator'
