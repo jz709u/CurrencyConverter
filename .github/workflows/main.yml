@@ -21,6 +21,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: Set Secret
+        env:
+          api_key: ${{ secrets.APIKEY }}
+        run: |
+          printf 'enum Secrets {
+    static let apiKey = "%s"
+}' $api_key > CurrencyConverter/AppResources/Secrets.swift
         
       - name: Install Dependencies
         run: |
