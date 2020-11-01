@@ -57,3 +57,13 @@ enum Secrets {
 1. Complete Unit Test and Integration Test Suite **partially done**
 2. Core Data support
 3. Centralized Color branding scheme
+
+## APP 
+
+### iOS 14
+
+![iOS 14 App](/README_Images/CurrencyConversionApp_iOS14.png)
+
+### iOS 12 to 13
+
+![iOS 12 - 13 App](README_Images/CurrencyConversionApp_iOS12_iOS13.png)
