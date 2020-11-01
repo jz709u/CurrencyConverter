@@ -52,13 +52,13 @@ enum Secrets {
 4. `open CurrencyConverter.xcworkspace`
 
 
-## TODO
+## Todo
 
 1. Complete Unit Test and Integration Test Suite **partially done**
 2. Core Data support
 3. Centralized Color branding scheme
 
-## APP 
+## App
 
 ### iOS 14
 
