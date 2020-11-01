@@ -26,9 +26,7 @@ jobs:
         env:
           api_key: ${{ secrets.APIKEY }}
         run: |
-          printf 'enum Secrets {
-    static let apiKey = "%s"
-}' $api_key > CurrencyConverter/AppResources/Secrets.swift
+          printf 'enum Secrets {\n static let apiKey = "%s"\n}' $api_key > CurrencyConverter/AppResources/Secrets.swift
         
       - name: Install Dependencies
         run: |
